@@ -18,14 +18,14 @@
       "WFWorkflowActionIdentifier": "is.workflow.actions.comment",
       "WFWorkflowActionParameters": {
         "WFCommentActionText": "先复制抖音视频链接，再运行本指令。设置 → 辅助功能 → 触控 → 轻点背面 → 轻点两下，选择本指令。仅在运行时读取剪贴板；只向你配置的服务发送匹配到的抖音链接。首次运行需允许网络、粘贴及存入照片。",
-        "UUID": "910E91F3-ABFD-4B17-A5A0-0906301EEA56"
+        "UUID": "64935AC2-9369-4CF8-BE6C-D748E474D22C"
       }
     },
     {
       "WFWorkflowActionIdentifier": "is.workflow.actions.gettext",
       "WFWorkflowActionParameters": {
-        "WFTextActionText": "https://your-server.example",
-        "UUID": "870E299A-0010-4A7F-8EC3-7016372E3F04"
+        "WFTextActionText": "https://hypeyolo.com/backtap",
+        "UUID": "E1914C80-364B-4CCF-B243-D4E5699FF2E3"
       }
     },
     {
@@ -35,40 +35,18 @@
         "WFInput": {
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "870E299A-0010-4A7F-8EC3-7016372E3F04",
+            "OutputUUID": "E1914C80-364B-4CCF-B243-D4E5699FF2E3",
             "OutputName": "Text"
           },
           "WFSerializationType": "WFTextTokenAttachment"
         },
-        "UUID": "29EA0088-EF8C-4DA4-81A4-7C2D97136C99"
-      }
-    },
-    {
-      "WFWorkflowActionIdentifier": "is.workflow.actions.gettext",
-      "WFWorkflowActionParameters": {
-        "WFTextActionText": "填写你的服务密钥",
-        "UUID": "664C5D8D-DD5E-434B-AB7A-123939D8FFEA"
-      }
-    },
-    {
-      "WFWorkflowActionIdentifier": "is.workflow.actions.setvariable",
-      "WFWorkflowActionParameters": {
-        "WFVariableName": "服务密钥",
-        "WFInput": {
-          "Value": {
-            "Type": "ActionOutput",
-            "OutputUUID": "664C5D8D-DD5E-434B-AB7A-123939D8FFEA",
-            "OutputName": "Text"
-          },
-          "WFSerializationType": "WFTextTokenAttachment"
-        },
-        "UUID": "14B9173A-7587-41CC-B145-B84A7918F3D2"
+        "UUID": "CC7B7960-7730-44A7-B5DF-00E68C84534B"
       }
     },
     {
       "WFWorkflowActionIdentifier": "is.workflow.actions.getclipboard",
       "WFWorkflowActionParameters": {
-        "UUID": "73DDDB26-DE25-4F56-B3CF-6697205A96FF"
+        "UUID": "92F8F581-68AA-441F-8BFE-F36ED22B1AD2"
       }
     },
     {
@@ -81,14 +59,14 @@
             "attachmentsByRange": {
               "{0, 1}": {
                 "Type": "ActionOutput",
-                "OutputUUID": "73DDDB26-DE25-4F56-B3CF-6697205A96FF",
+                "OutputUUID": "92F8F581-68AA-441F-8BFE-F36ED22B1AD2",
                 "OutputName": "Clipboard"
               }
             }
           },
           "WFSerializationType": "WFTextTokenString"
         },
-        "UUID": "7A9140F7-7F7C-4814-BCD3-E147142C701B"
+        "UUID": "4AD98220-8F11-42E7-8C95-602557D72761"
       }
     },
     {
@@ -98,18 +76,18 @@
         "WFInput": {
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "7A9140F7-7F7C-4814-BCD3-E147142C701B",
+            "OutputUUID": "4AD98220-8F11-42E7-8C95-602557D72761",
             "OutputName": "Matches"
           },
           "WFSerializationType": "WFTextTokenAttachment"
         },
-        "UUID": "557041F7-A0BE-4EA0-944B-77306B9B2C05"
+        "UUID": "799CF5F8-753D-45DC-A7A2-A0C96843D993"
       }
     },
     {
       "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
       "WFWorkflowActionParameters": {
-        "GroupingIdentifier": "5DED3F55-686E-4B34-B8CD-1D81545C744C",
+        "GroupingIdentifier": "DBCD1C70-0EC4-4916-AC0A-711114CB4ECD",
         "WFControlFlowMode": 0,
         "WFCondition": 100,
         "WFInput": {
@@ -117,13 +95,13 @@
           "Variable": {
             "Value": {
               "Type": "ActionOutput",
-              "OutputUUID": "557041F7-A0BE-4EA0-944B-77306B9B2C05",
+              "OutputUUID": "799CF5F8-753D-45DC-A7A2-A0C96843D993",
               "OutputName": "Item from List"
             },
             "WFSerializationType": "WFTextTokenAttachment"
           }
         },
-        "UUID": "92CA46BC-3722-42CE-A8F9-422CC495503F"
+        "UUID": "99AD40DA-3E97-4171-BEBB-AF6DD3F98819"
       }
     },
     {
@@ -136,14 +114,14 @@
             "attachmentsByRange": {
               "{0, 1}": {
                 "Type": "ActionOutput",
-                "OutputUUID": "557041F7-A0BE-4EA0-944B-77306B9B2C05",
+                "OutputUUID": "799CF5F8-753D-45DC-A7A2-A0C96843D993",
                 "OutputName": "Item from List"
               }
             }
           },
           "WFSerializationType": "WFTextTokenString"
         },
-        "UUID": "35504424-9A63-4384-AA23-B5F36188D74A"
+        "UUID": "38849102-A611-40FE-AB7E-6C9BCC6BDB88"
       }
     },
     {
@@ -159,14 +137,14 @@
               },
               "{17, 1}": {
                 "Type": "ActionOutput",
-                "OutputUUID": "35504424-9A63-4384-AA23-B5F36188D74A",
+                "OutputUUID": "38849102-A611-40FE-AB7E-6C9BCC6BDB88",
                 "OutputName": "URL Encoded Text"
               }
             }
           },
           "WFSerializationType": "WFTextTokenString"
         },
-        "UUID": "6E88C2B1-35AB-4A8B-8763-96DF38D0DB34"
+        "UUID": "D761F175-0103-4B3D-A47C-BE9D598C2C8F"
       }
     },
     {
@@ -178,7 +156,7 @@
             "attachmentsByRange": {
               "{0, 1}": {
                 "Type": "ActionOutput",
-                "OutputUUID": "6E88C2B1-35AB-4A8B-8763-96DF38D0DB34",
+                "OutputUUID": "D761F175-0103-4B3D-A47C-BE9D598C2C8F",
                 "OutputName": "Text"
               }
             }
@@ -188,34 +166,11 @@
         "WFHTTPMethod": "GET",
         "WFHTTPHeaders": {
           "Value": {
-            "WFDictionaryFieldValueItems": [
-              {
-                "WFItemType": 0,
-                "WFKey": {
-                  "Value": {
-                    "string": "Authorization",
-                    "attachmentsByRange": {}
-                  },
-                  "WFSerializationType": "WFTextTokenString"
-                },
-                "WFValue": {
-                  "Value": {
-                    "string": "Bearer ￼",
-                    "attachmentsByRange": {
-                      "{7, 1}": {
-                        "Type": "Variable",
-                        "VariableName": "服务密钥"
-                      }
-                    }
-                  },
-                  "WFSerializationType": "WFTextTokenString"
-                }
-              }
-            ]
+            "WFDictionaryFieldValueItems": []
           },
           "WFSerializationType": "WFDictionaryFieldValue"
         },
-        "UUID": "2CCC8C1F-746F-403D-B250-83100E57531C"
+        "UUID": "80F8E895-B6A4-4BC8-B86E-B230D8F1DC0E"
       }
     },
     {
@@ -225,18 +180,18 @@
         "WFInput": {
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "2CCC8C1F-746F-403D-B250-83100E57531C",
+            "OutputUUID": "80F8E895-B6A4-4BC8-B86E-B230D8F1DC0E",
             "OutputName": "Contents of URL"
           },
           "WFSerializationType": "WFTextTokenAttachment"
         },
-        "UUID": "DFEE015E-B0FA-44FA-938A-4F4A0E6B3BA1"
+        "UUID": "D09363E2-DFD5-4C66-BE12-BA9EAAC40460"
       }
     },
     {
       "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
       "WFWorkflowActionParameters": {
-        "GroupingIdentifier": "993B48B5-6A80-4B50-9A4A-7D718A767565",
+        "GroupingIdentifier": "FC906B7C-8B86-49E9-8C31-9AF2C22C4338",
         "WFControlFlowMode": 0,
         "WFCondition": 100,
         "WFInput": {
@@ -244,13 +199,13 @@
           "Variable": {
             "Value": {
               "Type": "ActionOutput",
-              "OutputUUID": "DFEE015E-B0FA-44FA-938A-4F4A0E6B3BA1",
+              "OutputUUID": "D09363E2-DFD5-4C66-BE12-BA9EAAC40460",
               "OutputName": "Dictionary Value"
             },
             "WFSerializationType": "WFTextTokenAttachment"
           }
         },
-        "UUID": "61CB7270-F3D2-4B4B-A584-B1957CB602F1"
+        "UUID": "A71A3A8D-3035-4FC8-A741-A6E982870C26"
       }
     },
     {
@@ -262,7 +217,7 @@
             "attachmentsByRange": {
               "{0, 1}": {
                 "Type": "ActionOutput",
-                "OutputUUID": "DFEE015E-B0FA-44FA-938A-4F4A0E6B3BA1",
+                "OutputUUID": "D09363E2-DFD5-4C66-BE12-BA9EAAC40460",
                 "OutputName": "Dictionary Value"
               }
             }
@@ -294,7 +249,7 @@
           },
           "WFSerializationType": "WFDictionaryFieldValue"
         },
-        "UUID": "73BA0E23-F889-4A6B-B6D0-EB81B822A4CB"
+        "UUID": "7B859634-D351-4C70-BBCE-2133369FE519"
       }
     },
     {
@@ -304,12 +259,12 @@
         "WFInput": {
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "73BA0E23-F889-4A6B-B6D0-EB81B822A4CB",
+            "OutputUUID": "7B859634-D351-4C70-BBCE-2133369FE519",
             "OutputName": "Contents of URL"
           },
           "WFSerializationType": "WFTextTokenAttachment"
         },
-        "UUID": "BB740B02-53A8-40B3-9C9F-91D5AE9E8CD8"
+        "UUID": "7F746160-E595-40C9-9E76-AF226695DF66"
       }
     },
     {
@@ -318,12 +273,12 @@
         "WFInput": {
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "BB740B02-53A8-40B3-9C9F-91D5AE9E8CD8",
+            "OutputUUID": "7F746160-E595-40C9-9E76-AF226695DF66",
             "OutputName": "Renamed Item"
           },
           "WFSerializationType": "WFTextTokenAttachment"
         },
-        "UUID": "5B8816B3-9A6E-455B-96BC-DE9BF67AAF5E"
+        "UUID": "2242F8FE-43E6-43E8-AF6E-B9806FC1614D"
       }
     },
     {
@@ -332,15 +287,15 @@
         "WFNotificationActionTitle": "轻点下载",
         "WFNotificationActionBody": "视频已保存到相册。",
         "WFNotificationActionSound": false,
-        "UUID": "1D048E84-5A5D-433A-902A-DBB9DAA45DAA"
+        "UUID": "AD3CFAF2-0DFD-419E-B60F-DBB462049B10"
       }
     },
     {
       "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
       "WFWorkflowActionParameters": {
-        "GroupingIdentifier": "993B48B5-6A80-4B50-9A4A-7D718A767565",
+        "GroupingIdentifier": "FC906B7C-8B86-49E9-8C31-9AF2C22C4338",
         "WFControlFlowMode": 1,
-        "UUID": "C13B3AC7-2AF8-43A8-99F1-540963E59F22"
+        "UUID": "17A0FF58-83DE-41DE-850E-DB9FD49B3021"
       }
     },
     {
@@ -350,12 +305,12 @@
         "WFInput": {
           "Value": {
             "Type": "ActionOutput",
-            "OutputUUID": "2CCC8C1F-746F-403D-B250-83100E57531C",
+            "OutputUUID": "80F8E895-B6A4-4BC8-B86E-B230D8F1DC0E",
             "OutputName": "Contents of URL"
           },
           "WFSerializationType": "WFTextTokenAttachment"
         },
-        "UUID": "6C9B3FAF-4E7E-4808-A564-C6119574B7C0"
+        "UUID": "D374E165-B106-4BFD-8C2F-F18D5AD99FE9"
       }
     },
     {
@@ -364,11 +319,11 @@
         "WFAlertActionTitle": "这次没有下载成功",
         "WFAlertActionMessage": {
           "Value": {
-            "string": "请检查服务地址、密钥和网络。服务返回：￼",
+            "string": "请稍后重试。服务返回：￼",
             "attachmentsByRange": {
-              "{19, 1}": {
+              "{11, 1}": {
                 "Type": "ActionOutput",
-                "OutputUUID": "6C9B3FAF-4E7E-4808-A564-C6119574B7C0",
+                "OutputUUID": "D374E165-B106-4BFD-8C2F-F18D5AD99FE9",
                 "OutputName": "Dictionary Value"
               }
             }
@@ -376,23 +331,23 @@
           "WFSerializationType": "WFTextTokenString"
         },
         "WFAlertActionCancelButtonShown": false,
-        "UUID": "41A7EA3B-659A-4A66-B882-F19DD358D223"
+        "UUID": "01A9122C-33CE-4E03-A5C3-D00F5F67E288"
       }
     },
     {
       "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
       "WFWorkflowActionParameters": {
-        "GroupingIdentifier": "993B48B5-6A80-4B50-9A4A-7D718A767565",
+        "GroupingIdentifier": "FC906B7C-8B86-49E9-8C31-9AF2C22C4338",
         "WFControlFlowMode": 2,
-        "UUID": "09ED4C88-6DD3-45DD-9893-444B33A3DE84"
+        "UUID": "E47F2F27-EFB9-4D9C-975C-9AF3BFD63377"
       }
     },
     {
       "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
       "WFWorkflowActionParameters": {
-        "GroupingIdentifier": "5DED3F55-686E-4B34-B8CD-1D81545C744C",
+        "GroupingIdentifier": "DBCD1C70-0EC4-4916-AC0A-711114CB4ECD",
         "WFControlFlowMode": 1,
-        "UUID": "E3466518-03D4-4DAA-B807-DC3875F95D6D"
+        "UUID": "B5E1518F-1E17-4479-BBB7-AA3EFFE62AAD"
       }
     },
     {
@@ -401,15 +356,15 @@
         "WFAlertActionTitle": "还没有抖音链接",
         "WFAlertActionMessage": "请先在抖音点“分享 → 复制链接”，然后再轻点两下背面。",
         "WFAlertActionCancelButtonShown": false,
-        "UUID": "8B8DC054-CE1C-4CDB-A527-4936771353E2"
+        "UUID": "2D0407B9-5173-4C24-9E91-97A7FC2F069F"
       }
     },
     {
       "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
       "WFWorkflowActionParameters": {
-        "GroupingIdentifier": "5DED3F55-686E-4B34-B8CD-1D81545C744C",
+        "GroupingIdentifier": "DBCD1C70-0EC4-4916-AC0A-711114CB4ECD",
         "WFControlFlowMode": 2,
-        "UUID": "42BF52A8-9370-4874-B946-99091EE274DC"
+        "UUID": "45007DE9-6E86-440E-B672-1BC8C278E66D"
       }
     }
   ]

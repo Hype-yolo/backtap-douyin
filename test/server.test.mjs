@@ -62,3 +62,9 @@ test('proxy-aware public rate limit distinguishes clients and rejects invalid fo
  assert.equal((await request('invalid-one')).status,200);
  assert.equal((await request('invalid-two')).status,429);
 });
+test('stalled browser work returns a bounded error and triggers recovery',async t=>{
+ let recoveries=0;
+ const {base}=await fixture(t,{requestDeadlineMs:15,onStall:()=>{recoveries++;},resolver:{resolve:()=>new Promise(()=>{})}});
+ const r=await fetch(base+'/v1/resolve?url=x',{headers:{authorization:`Bearer ${token}`}});
+ assert.equal(r.status,504);assert.equal((await r.json()).error.code,'RESOLVE_TIMEOUT');assert.equal(recoveries,1);
+});

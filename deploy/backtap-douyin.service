@@ -15,7 +15,6 @@ ExecStart=/usr/bin/node /opt/backtap-douyin/src/server.mjs
 Restart=on-failure
 RestartSec=5
 TimeoutStopSec=5
-MemoryHigh=420M
 MemoryMax=450M
 MemorySwapMax=0
 OOMPolicy=kill

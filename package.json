@@ -1,6 +1,6 @@
 {
   "name": "backtap-douyin",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "description": "Copy a Douyin link, Back Tap, save to Photos. Self-hosted resolver and iOS Shortcut.",
   "type": "module",

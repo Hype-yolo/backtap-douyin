@@ -14,7 +14,7 @@ function authenticated(req,token) {
   return supplied.length===expected.length && timingSafeEqual(supplied,expected);
 }
 
-export function createServer({resolver,token,rateLimit=10,now=Date.now,publicAccess=false,quota,trustProxy=false}) {
+export function createServer({resolver,token,rateLimit=10,now=Date.now,publicAccess=false,quota,trustProxy=false,requestDeadlineMs=50000,onStall=()=>{}}) {
   if(!publicAccess&&(typeof token!=='string'||token.length<24||token.startsWith('replace-'))) throw new Error('API_TOKEN must contain at least 24 characters; generate one with openssl rand -hex 24.');
   if(publicAccess&&!quota)throw new Error('Public mode requires a persistent daily quota.');
   const buckets=new Map();
@@ -26,12 +26,12 @@ export function createServer({resolver,token,rateLimit=10,now=Date.now,publicAcc
     const json=(status,body)=>{res.writeHead(status,{'Content-Type':'application/json; charset=utf-8'});res.end(JSON.stringify(body));};
     try {
       const u=new URL(req.url,'http://localhost');
-      if(req.method==='GET'&&u.pathname==='/health') return json(200,{ok:true,service:'backtap-douyin',version:'0.1.0'});
+      if(req.method==='GET'&&u.pathname==='/health') return json(200,{ok:true,service:'backtap-douyin',version:'0.2.0'});
       if(req.method==='GET'&&u.pathname==='/download/backtap-douyin.shortcut') {
         let bytes;
         try{bytes=await readFile(new URL('../public/backtap-douyin.shortcut',import.meta.url));}
         catch(e){if(e.code==='ENOENT')return json(404,{ok:false,error:{code:'SHORTCUT_NOT_CONFIGURED',message:'管理员尚未提供本站快捷指令安装包。'}});throw e;}
-        res.writeHead(200,{'Content-Type':'application/octet-stream','Content-Disposition':'attachment; filename="backtap-douyin.shortcut"'});
+        res.writeHead(200,{'Content-Type':'application/octet-stream','Content-Disposition':"attachment; filename=\"backtap-douyin.shortcut\"; filename*=UTF-8''"+encodeURIComponent('轻点下载.shortcut')});
         return res.end(bytes);
       }
       if(req.method==='GET'&&u.pathname==='/') {
@@ -58,7 +58,16 @@ export function createServer({resolver,token,rateLimit=10,now=Date.now,publicAcc
         try{input=JSON.parse(body).url;}catch{throw new AppError('INVALID_REQUEST','请求格式不正确。',400);}
       }
       if(publicAccess){input=extractLink(input).href;await quota.take();}
-      const result=await resolver.resolve(input);
+      let deadline;
+      const timedOut=new Promise((_,reject)=>{
+        deadline=setTimeout(()=>{
+          reject(new AppError('RESOLVE_TIMEOUT','解析超时，服务正在恢复，请一分钟后重试。',504));
+          onStall();
+        },requestDeadlineMs);
+      });
+      let result;
+      try{result=await Promise.race([resolver.resolve(input),timedOut]);}
+      finally{clearTimeout(deadline);}
       return json(200,{ok:true,...result});
     } catch(e) {
       if(res.headersSent) return res.end();
@@ -74,7 +83,7 @@ if(process.argv[1]===fileURLToPath(import.meta.url)) {
   const positive=(name,fallback)=>{const n=Number(process.env[name]||fallback);if(!Number.isInteger(n)||n<1)throw new Error(`${name} must be a positive integer`);return n;};
   const resolver=new Resolver({timeoutMs:positive('RESOLVE_TIMEOUT_MS',40000),maxConcurrent:positive('MAX_CONCURRENT',1),proxy:process.env.BROWSER_PROXY});
   const publicAccess=process.env.PUBLIC_ACCESS==='1';
-  const server=createServer({resolver,token:process.env.API_TOKEN,rateLimit:positive('RATE_LIMIT_PER_MINUTE',10),publicAccess,trustProxy:process.env.TRUST_PROXY==='1',quota:publicAccess?new DailyQuota(process.env.QUOTA_FILE||'.local/quota.json',positive('DAILY_LIMIT',100)):undefined});
+  const server=createServer({resolver,token:process.env.API_TOKEN,rateLimit:positive('RATE_LIMIT_PER_MINUTE',10),publicAccess,trustProxy:process.env.TRUST_PROXY==='1',onStall:()=>setTimeout(()=>process.exit(1),1000).unref(),quota:publicAccess?new DailyQuota(process.env.QUOTA_FILE||'.local/quota.json',positive('DAILY_LIMIT',100)):undefined});
   server.requestTimeout=15000;server.headersTimeout=10000;
   const host=process.env.HOST||'127.0.0.1',port=positive('PORT',8796);
   server.listen(port,host,()=>console.info(`轻点下载 listening at http://${host}:${port}`));

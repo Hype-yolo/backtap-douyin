@@ -1,6 +1,6 @@
 # 自建解析服务
 
-面向有 Linux、域名和 SSH 经验的服务管理员。普通用户只需[安装快捷指令](INSTALL.md)。本项目没有公共服务，不需要购买第三方解析 API。
+面向有 Linux、域名和 SSH 经验的服务管理员。普通用户只需[安装快捷指令](INSTALL.md)。本项目提供有额度的公共试用服务；本页供希望自行维护后端的管理员使用，不需要购买第三方解析 API。
 
 ## 环境和容量
 
@@ -8,7 +8,7 @@
 
 Node.js 至少 20.20；可以使用 Node.js 22。先检查 `node --version`、`npm --version`。安装或升级 Node.js 不属于下面的服务安装步骤，已有服务器应沿用自己的运行时管理方式。
 
-单请求样本解析约 32 秒，服务 cgroup 峰值约 421 MiB。建议预留至少 600 MiB 可用内存供服务及运行开销；并发默认 1。仓库附带 450 MiB 内存硬上限和一个 CPU 核的算力上限，**这不是所有机器、视频和负载下的稳定性保证**。小内存共享服务器不要直接开放不限量公共接口。
+单请求样本解析约 32 秒，早期服务 cgroup 峰值约 421 MiB，后续测试已接近 450 MiB 上限。建议预留至少 600 MiB 可用内存供服务及运行开销；并发默认 1。仓库附带 450 MiB 内存硬上限和一个 CPU 核的算力上限，**这不是所有机器、视频和负载下的稳定性保证**。小内存共享服务器不要直接开放不限量公共接口。
 
 ## 1. 安装代码和浏览器
 
@@ -111,11 +111,11 @@ console.log({id:data.id,width:data.width,height:data.height,saved:'test-video.mp
 JS
 ```
 
-打开 `test-video.mp4`，核对内容、声音与时长；如已安装 ffprobe，也可以使用它核验。最后按[安装教程](INSTALL.md)在 iPhone 验证存入相册。一次成功不代表所有视频都能解析。
+打开 `test-video.mp4`，核对内容、声音与时长；如已安装 ffprobe，也可以使用它核验。最后按[自建版手机配置说明](SELFHOST-INSTALL.md)在 iPhone 验证存入相册。一次成功不代表所有视频都能解析。
 
 ## 5. 给用户安装
 
-提供你的 HTTPS 基础地址和访问密钥，以及项目 Release 下载链接。默认是一枚共享访问密钥；把它给某人即授权该人使用你的解析服务。公共推广前请自行决定访问控制、额度和成本。
+提供你的 HTTPS 基础地址和访问密钥，以及 v0.1.0 自建版 Release 下载链接，或下面生成的自有安装包（v0.2.0 公共版预填作者服务地址）。默认是一枚共享访问密钥；把它给某人即授权该人使用你的解析服务。公共推广前请自行决定访问控制、额度和成本。
 
 如需自有品牌的快捷指令，可以在 macOS 生成预填服务地址的版本：
 
@@ -124,7 +124,7 @@ python3 scripts/build_shortcut.py --endpoint https://download.example.com
 shortcuts sign --mode anyone --input shortcuts/轻点下载.unsigned.shortcut --output shortcuts/backtap-douyin.shortcut
 ```
 
-这不会预填密钥，用户仍需填写。将签名文件复制为服务器的 `public/backtap-douyin.shortcut`，即可启用 `/download/backtap-douyin.shortcut`；未放置时该地址返回 404。静态首页默认指向 GitHub Release。
+这不会预填密钥，用户仍需填写。将签名文件复制为服务器的 `public/backtap-douyin.shortcut`，即可启用 `/download/backtap-douyin.shortcut`；未放置时该地址返回 404。静态首页的安装按钮指向本站下载路径。自行部署时请修改首页中的作者服务说明、额度和外部链接，使其符合自己的服务。
 
 ## 可选公共模式
 
@@ -141,7 +141,7 @@ TRUST_PROXY=1
 
 公共模式不检查密钥，使用 UTC 日期的持久化总请求额度；无效链接不扣额度，已受理的有效链接即使解析失败也会计入额度。它不是多用户配额或收费系统，只支持单进程写入一个额度文件。
 
-给公共模式生成指令需要追加 `--public`。不要用本项目作者的域名作为你的服务地址；项目没有公共运行实例。
+给公共模式生成指令需要追加 `--public`。不要用本项目作者的域名作为你的服务地址；只有使用作者维护的公开试用版时才使用安装页预填的地址；自行部署时使用自己的域名。
 
 ## 更新、停止与排错
 
@@ -149,5 +149,6 @@ TRUST_PROXY=1
 - 查看资源：`systemctl show backtap-douyin -p MemoryCurrent -p MemoryPeak -p NRestarts`。
 - 停止：`systemctl disable --now backtap-douyin`，移除仅属于该服务的 Nginx 配置，`nginx -t` 后 reload。保留数据，便于恢复。
 - `RESOLVE_FAILED`：检查公网访问、平台限制、资源上限和 journal；不要导入个人登录 Cookie 作为默认解决办法。
+- `RESOLVE_TIMEOUT`：请求超过 50 秒时返回超时并退出本服务，由 systemd 自动恢复；不会重启整台服务器或其他产品。
 - Chromium 沙箱错误：核对 AppArmor 配置的可执行文件路径与运行用户，不要简单添加 `--no-sandbox`。
 - 反复被 OOM 杀死或影响其他服务：先停服务，降低开放范围或调整容量，不要直接取消资源限制。

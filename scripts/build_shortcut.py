@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Build an inspectable iOS Shortcut. Signing is a separate macOS command.
 
-No keys or per-user URLs belong in the published artifact. Users configure the
-two Text actions in the editor after import. The clipboard is read only when manually triggered.
+Never embed private keys in published artifacts. Private builds require service
+settings; public builds preset an endpoint and omit key actions. The clipboard is
+read only when the user triggers the shortcut.
 """
 import argparse
 import json
@@ -54,8 +55,9 @@ def build(endpoint="https://your-server.example", name="轻点下载", public=Fa
     add("comment",WFCommentActionText="先复制抖音视频链接，再运行本指令。设置 → 辅助功能 → 触控 → 轻点背面 → 轻点两下，选择本指令。仅在运行时读取剪贴板；只向你配置的服务发送匹配到的抖音链接。首次运行需允许网络、粘贴及存入照片。")
     server=add("gettext",WFTextActionText=endpoint)
     add("setvariable",WFVariableName="服务地址",WFInput=attachment(output(server,"Text")))
-    key=add("gettext",WFTextActionText="" if public else "填写你的服务密钥")
-    add("setvariable",WFVariableName="服务密钥",WFInput=attachment(output(key,"Text")))
+    if not public:
+        key=add("gettext",WFTextActionText="填写你的服务密钥")
+        add("setvariable",WFVariableName="服务密钥",WFInput=attachment(output(key,"Text")))
     clip=add("getclipboard")
     match=add("text.match",WFMatchTextPattern=r"https?://(?:(?:v|www)\.)?(?:douyin\.com|iesdouyin\.com)/[^\s<>\"\]\[，。！？）]+",text=text(output(clip,"Clipboard")))
     first=add("getitemfromlist",WFItemSpecifier="First Item",WFInput=attachment(output(match,"Matches")))
@@ -73,7 +75,7 @@ def build(endpoint="https://your-server.example", name="轻点下载", public=Fa
     add("notification",WFNotificationActionTitle="轻点下载",WFNotificationActionBody="视频已保存到相册。",WFNotificationActionSound=False)
     add("conditional",GroupingIdentifier=inner,WFControlFlowMode=1)
     error=add("getvalueforkey",WFDictionaryKey="error.message",WFInput=attachment(output(response,"Contents of URL")))
-    add("alert",WFAlertActionTitle="这次没有下载成功",WFAlertActionMessage=text("请检查服务地址、密钥和网络。服务返回：",output(error,"Dictionary Value")),WFAlertActionCancelButtonShown=False)
+    add("alert",WFAlertActionTitle="这次没有下载成功",WFAlertActionMessage=text("请稍后重试。服务返回：" if public else "请检查服务地址、密钥和网络。服务返回：",output(error,"Dictionary Value")),WFAlertActionCancelButtonShown=False)
     add("conditional",GroupingIdentifier=inner,WFControlFlowMode=2)
     add("conditional",GroupingIdentifier=group,WFControlFlowMode=1)
     add("alert",WFAlertActionTitle="还没有抖音链接",WFAlertActionMessage="请先在抖音点“分享 → 复制链接”，然后再轻点两下背面。",WFAlertActionCancelButtonShown=False)
