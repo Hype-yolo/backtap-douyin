@@ -1,0 +1,12 @@
+node_modules/
+.env
+.env.*
+!.env.example
+.local/
+artifacts/
+*.log
+.DS_Store
+shortcuts/*.shortcut
+shortcuts/*.unsigned.plist
+public/*.shortcut
+__pycache__/

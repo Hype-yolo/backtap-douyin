@@ -1,0 +1,32 @@
+[Unit]
+Description=Back Tap Douyin resolver
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=backtap
+Group=backtap
+WorkingDirectory=/opt/backtap-douyin
+EnvironmentFile=/etc/backtap-douyin.env
+Environment=HOME=/var/lib/backtap-douyin
+Environment=PLAYWRIGHT_BROWSERS_PATH=/opt/backtap-douyin/browsers
+ExecStart=/usr/bin/node /opt/backtap-douyin/src/server.mjs
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=5
+MemoryHigh=420M
+MemoryMax=450M
+MemorySwapMax=0
+OOMPolicy=kill
+CPUQuota=100%
+TasksMax=192
+UMask=0077
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/backtap-douyin
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

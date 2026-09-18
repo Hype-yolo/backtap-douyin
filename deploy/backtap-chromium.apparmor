@@ -1,0 +1,7 @@
+abi <abi/4.0>,
+include <tunables/global>
+
+# Dedicated, root-owned executable only. Enable Chromium's own userns sandbox.
+profile backtap-chromium /opt/backtap-douyin/browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell flags=(unconfined) {
+  userns,
+}

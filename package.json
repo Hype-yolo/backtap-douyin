@@ -1,0 +1,20 @@
+{
+  "name": "backtap-douyin",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Copy a Douyin link, Back Tap, save to Photos. Self-hosted resolver and iOS Shortcut.",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.20"
+  },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env src/server.mjs",
+    "test": "node --test",
+    "smoke": "node scripts/smoke.mjs",
+    "shortcut": "python3 scripts/build_shortcut.py"
+  },
+  "dependencies": {
+    "playwright": "1.63.0"
+  }
+}
