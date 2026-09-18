@@ -13,6 +13,8 @@
 
 在 iPhone 上用 Safari 打开项目的 [Releases 页面](https://github.com/Hype-yolo/backtap-douyin/releases/tag/v0.1.0)，下载 `backtap-douyin.shortcut`，打开文件，选择“添加快捷指令”。如果浏览器把文件保存到“文件”App，从“下载项”点开它即可。
 
+如果添加后名称显示为 `backtap-douyin` 或下载文件名，可在编辑页面把它重命名为“轻点下载”；也可以保留名称，绑定背面时选择实际名称。
+
 这是实验性版本。安装后先手动测试，再绑定背面手势。
 
 ## 2. 填写两项设置
